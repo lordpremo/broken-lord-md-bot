@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>BROKEN LORD – Pair Chamber</title>
+  <style>
+    body { background:#050016; color:#fff; text-align:center; padding:40px; }
+    input { width:80%; padding:10px; border-radius:8px; background:#0b021f; color:#fff; }
+    button { padding:10px 25px; border-radius:999px; background:#7b3cff; color:#fff; }
+    .code { margin-top:20px; padding:10px; border:1px dashed #7b3cff; }
+  </style>
+</head>
+<body>
+
+<h1>BROKEN LORD – Pair Chamber</h1>
+<p>Enter your WhatsApp number (e.g. 255688422125)</p>
+
+<input id="num" placeholder="255688422125">
+<button onclick="gen()">Generate Code</button>
+
+<div id="res" class="code" style="display:none;"></div>
+
+<script>
+async function gen() {
+  const number = document.getElementById("num").value.trim();
+  if (!number) return alert("Enter number");
+
+  const res = await fetch("/api/pair", {
+    method:"POST",
+    headers:{ "Content-Type":"application/json" },
+    body:JSON.stringify({ number })
+  });
+
+  const data = await res.json();
+
+  document.getElementById("res").style.display="block";
+  document.getElementById("res").innerHTML =
+    "PAIR CODE: <b>" + data.code + "</b>";
+}
+</script>
+
+</body>
+</html>
